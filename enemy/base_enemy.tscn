@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://b2iprmiuew0wt"]
+
+[node name="BaseEnemy" type="CharacterBody2D" groups=["enemy"]]
+
+[node name="WallCheck" type="Node2D" parent="."]
+
+[node name="WallRayCastLeft" type="RayCast2D" parent="WallCheck"]
+rotation = 1.5708
+target_position = Vector2(7.96398e-05, 22)
+
+[node name="WallRayCastRight" type="RayCast2D" parent="WallCheck"]
+rotation = 4.71239
+target_position = Vector2(2.22088e-05, 23)
+
+[node name="FloorCheck" type="Node2D" parent="."]
+
+[node name="FloorRayCastLeft" type="RayCast2D" parent="FloorCheck"]
+position = Vector2(-7, 0)
+target_position = Vector2(0, 36)
+
+[node name="FloorRayCastRight" type="RayCast2D" parent="FloorCheck"]
+position = Vector2(7, 1)
+target_position = Vector2(0, 36)
+
+[node name="PlayerTrackerPivot" type="Node2D" parent="."]
+
+[node name="PlayerTrackRayCast" type="RayCast2D" parent="PlayerTrackerPivot"]
+rotation = -1.5708
+target_position = Vector2(-3.0598e-06, 70)
+
+[node name="ChaseTimer" type="Timer" parent="."]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cq6nkrmr4rxd2"]
+
+[ext_resource type="Texture2D" uid="uid://x7ctgeppwshr" path="res://assets/Squire dash.png" id="1_wijr8"]
+[ext_resource type="Script" path="res://Sprite2D.gd" id="2_17lu2"]
+
+[node name="Afterimage" type="Sprite2D"]
+modulate = Color(0.376471, 0.376471, 0.376471, 1)
+show_behind_parent = true
+texture = ExtResource("1_wijr8")
+script = ExtResource("2_17lu2")

@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://itpk8jbs7ojy"]
+
+[ext_resource type="PackedScene" uid="uid://b2iprmiuew0wt" path="res://enemy/base_enemy.tscn" id="1_1aqs6"]
+[ext_resource type="Script" path="res://enemy/golem.gd" id="2_grgq5"]
+[ext_resource type="Texture2D" uid="uid://rqs4hpuyt7yc" path="res://assets/rock golem.png" id="2_noc3p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1cgo"]
+atlas = ExtResource("2_noc3p")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0c8y2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1cgo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_te2c5"]
+size = Vector2(15, 26)
+
+[node name="Golem" instance=ExtResource("1_1aqs6")]
+collision_layer = 8
+script = ExtResource("2_grgq5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_0c8y2")
+frame_progress = 0.794378
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_te2c5")
+
+[node name="PlayerTrackRayCast" parent="PlayerTrackerPivot" index="0"]
+collision_mask = 3

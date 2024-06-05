@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://5qt77esjuchh"]
+
+[ext_resource type="Script" path="res://enemy/flyingeye.gd" id="1_p1ow7"]
+[ext_resource type="Texture2D" uid="uid://c4dakkpltuc24" path="res://assets/flying eye.png" id="2_usebu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pb3eb"]
+radius = 4.0
+height = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0tsbb"]
+atlas = ExtResource("2_usebu")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ucpdl"]
+atlas = ExtResource("2_usebu")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cadx3"]
+atlas = ExtResource("2_usebu")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jupp3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0tsbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ucpdl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cadx3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xcsnf"]
+radius = 136.015
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1mmsn"]
+radius = 4.12311
+
+[node name="FlyingEye" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 8
+script = ExtResource("1_p1ow7")
+gravity = null
+speed = null
+jump_force = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_pb3eb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jupp3")
+animation = &"idle"
+
+[node name="Detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
+light_mask = 8
+visibility_layer = 8
+shape = SubResource("CircleShape2D_xcsnf")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_1mmsn")
+
+[connection signal="body_entered" from="Detection" to="." method="_on_detection_body_entered"]
+[connection signal="body_exited" from="Detection" to="." method="_on_detection_body_exited"]

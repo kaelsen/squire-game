@@ -1,0 +1,167 @@
+[gd_scene load_steps=20 format=3 uid="uid://dc1cft87yavdk"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_mr5j4"]
+[ext_resource type="Texture2D" uid="uid://bhrk65qr65pph" path="res://assets/idle squire.png" id="2_8wcml"]
+[ext_resource type="Texture2D" uid="uid://x7ctgeppwshr" path="res://assets/Squire dash.png" id="2_d3lgj"]
+[ext_resource type="Texture2D" uid="uid://ffolj0mfpjyo" path="res://assets/jump fall squire.png" id="2_mjsxs"]
+[ext_resource type="Texture2D" uid="uid://gbi5b7fsihp5" path="res://assets/squire run sheet.png" id="3_oehiu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6ex0"]
+atlas = ExtResource("2_mjsxs")
+region = Rect2(16, 0, 16, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_othdd"]
+atlas = ExtResource("2_8wcml")
+region = Rect2(0, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mvks"]
+atlas = ExtResource("2_8wcml")
+region = Rect2(16, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ygmu"]
+atlas = ExtResource("2_8wcml")
+region = Rect2(32, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gypwy"]
+atlas = ExtResource("2_8wcml")
+region = Rect2(48, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgpbw"]
+atlas = ExtResource("2_mjsxs")
+region = Rect2(0, 0, 16, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63pm7"]
+atlas = ExtResource("3_oehiu")
+region = Rect2(0, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pqu7n"]
+atlas = ExtResource("3_oehiu")
+region = Rect2(16, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1q4b"]
+atlas = ExtResource("3_oehiu")
+region = Rect2(32, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4uq62"]
+atlas = ExtResource("3_oehiu")
+region = Rect2(48, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmjer"]
+atlas = ExtResource("3_oehiu")
+region = Rect2(64, 0, 16, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gr6j3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6ex0")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_d3lgj")
+}],
+"loop": false,
+"name": &"flash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_othdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mvks")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_4ygmu")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_gypwy")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wgpbw")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63pm7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pqu7n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1q4b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4uq62")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmjer")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kwuow"]
+radius = 5.0
+height = 16.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c7kth"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+damping_min = 1.0
+damping_max = 5.0
+scale_max = 2.0
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(674, 325)
+script = ExtResource("1_mr5j4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, 0)
+sprite_frames = SubResource("SpriteFrames_gr6j3")
+animation = &"flash"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_kwuow")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="DashParticles" type="GPUParticles2D" parent="."]
+show_behind_parent = true
+position = Vector2(1, 8)
+emitting = false
+amount = 35
+process_material = SubResource("ParticleProcessMaterial_c7kth")
+lifetime = 0.5
+explosiveness = 0.2
+randomness = 1.0
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="DashCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
